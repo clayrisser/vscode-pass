@@ -1,0 +1,19 @@
+{
+  "action": "list",
+  "echoResponse": "",
+  "file": "",
+  "storeId": "default",
+  "settings": {
+    "gpgPath": "~/.gnupg",
+    "stores": {
+      "default": {
+        "id": "default",
+        "name": "default",
+        "path": "~/.password-store",
+        "settings": {
+          "gpgPath": "~/.gnupg"
+        }
+      }
+    }
+  }
+}
