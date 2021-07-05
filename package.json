@@ -11,7 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:pass.listPasswords",
-    "onCommand:pass.fetchPassword"
+    "onCommand:pass.showPassword"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -21,8 +21,8 @@
         "title": "List Passwords"
       },
       {
-        "command": "pass.fetchPassword",
-        "title": "Fetch Password"
+        "command": "pass.showPassword",
+        "title": "Show Password"
       }
     ]
   },
@@ -57,6 +57,7 @@
   "dependencies": {
     "@types/which": "^2.0.1",
     "execa": "^5.1.1",
+    "pass-client": "0.0.3",
     "qs": "^6.10.1",
     "which": "^2.0.2"
   }

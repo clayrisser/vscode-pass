@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as qs from "qs";
-import Pass from "./services/pass";
+import { Pass } from "pass-client";
 
 export default class PassDocument
   implements vscode.TextDocumentContentProvider
