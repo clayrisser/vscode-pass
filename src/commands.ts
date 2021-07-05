@@ -9,8 +9,15 @@ export default class Commands {
   async listPasswords() {
     const { files } = (await this.pass.list()).data;
     Object.entries(files).forEach(
-      ([listName, fileList]: [string, string[]]) => {
-        vscode.window.showInformationMessage(fileList.join(" - "));
+      async ([listName, fileList]: [string, string[]]) => {
+        const content = fileList.join("\n");
+        const uri = vscode.Uri.parse(
+          `pass:${listName}.list?content=${Buffer.from(content).toString(
+            "base64"
+          )}`
+        );
+        const doc = await vscode.workspace.openTextDocument(uri);
+        await vscode.window.showTextDocument(doc, { preview: false });
       }
     );
   }

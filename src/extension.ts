@@ -2,10 +2,16 @@ import * as vscode from "vscode";
 import Pass from "./services/pass";
 import Commands from "./commands";
 import pkg from "./pkg";
+import PassDocument from "./passDocument";
 
 const pass = new Pass();
 
 export function activate(context: vscode.ExtensionContext) {
+  vscode.workspace.registerTextDocumentContentProvider(
+    "pass",
+    new PassDocument()
+  );
+
   const commands = new Commands(context);
 
   Object.getOwnPropertyNames(Object.getPrototypeOf(commands)).forEach(
