@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:pass.listPasswords"
+    "onCommand:pass.listPasswords",
+    "onCommand:pass.fetchPassword"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -18,6 +19,10 @@
       {
         "command": "pass.listPasswords",
         "title": "List Passwords"
+      },
+      {
+        "command": "pass.fetchPassword",
+        "title": "Fetch Password"
       }
     ]
   },
@@ -50,7 +55,9 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
+    "@types/which": "^2.0.1",
     "execa": "^5.1.1",
-    "qs": "^6.10.1"
+    "qs": "^6.10.1",
+    "which": "^2.0.2"
   }
 }

@@ -23,8 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
         // @ts-ignore
         typeof commands[commandName] === "function"
       ) {
-        // @ts-ignore
-        const command = (...args: any[]) => commands[commandName](...args);
+        const command = (...args: any[]) => {
+          // @ts-ignore
+          return commands[commandName](...args).catch(console.error);
+        };
         context.subscriptions.push(
           vscode.commands.registerCommand(`${pkg.name}.${commandName}`, command)
         );
