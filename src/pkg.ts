@@ -1,10 +1,10 @@
 /*
- * File: /src/util.ts
- * Project: vscode-pass
- * File Created: 06-07-2021 15:27:46
+ * File: /src/pkg.ts
+ * Project: pass
+ * File Created: 06-07-2021 16:45:37
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 06-07-2021 15:55:36
+ * Last Modified: 06-07-2021 16:47:02
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -22,13 +22,21 @@
  * limitations under the License.
  */
 
-export function getNonce() {
-  let text = '';
-  const possible =
-    // eslint-disable-next-line spellcheck/spell-checker
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < 32; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
+import fs from 'fs';
+import path from 'path';
+
+const pkg: Pkg = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, '../package.json')).toString()
+);
+
+export interface Pkg {
+  name: string;
+
+  description: string;
+
+  version: string;
+
+  [key: string]: any;
 }
+
+export default pkg;

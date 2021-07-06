@@ -1,8 +1,144 @@
 {
   "name": "pass",
-  "displayName": "pass",
-  "description": "access passwords from the standard unix password manager",
   "version": "0.0.1",
+  "description": "access passwords from the standard unix password manager",
+  "private": true,
+  "sideEffects": false,
+  "keywords": [
+    "vscode-pass",
+    "pass",
+    "vscode",
+    "unix",
+    "passwordstore.org",
+    "passwordstore",
+    "browserpass"
+  ],
+  "homepage": "https://github.com/clayrisser/vscode-pass",
+  "bugs": {
+    "url": "https://github.com/clayrisser/vscode-pass/issues",
+    "email": "email@clayrisser.com"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Clay Risser",
+    "email": "email@clayrisser.com",
+    "url": "https://clayrisser.com"
+  },
+  "files": [
+    "es",
+    "dist",
+    "lib"
+  ],
+  "main": "./dist/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clayrisser/vscode-pass"
+  },
+  "scripts": {
+    "build": "make -s build",
+    "clean": "make -s clean",
+    "coverage": "make -s coverage",
+    "format": "make -s format",
+    "inc": "make -s inc",
+    "lint": "make -s lint",
+    "make": "make",
+    "package": "make -s package",
+    "prepare": "make -s prepare",
+    "pretest": "npm run test:compile && npm run lint",
+    "purge": "make -s purge",
+    "report": "make -s report",
+    "spellcheck": "make -s spellcheck",
+    "start": "make -s start",
+    "test": "make -s test",
+    "test:compile": "tsc -p ./",
+    "test:ui": "make test-ui",
+    "test:watch": "make -s test-watch",
+    "vscode:prepublish": "npm run package",
+    "watch": "make -s watch"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.6",
+    "@types/which": "^2.0.1",
+    "core-js": "^3.15.2",
+    "execa": "^5.1.1",
+    "marked": "^2.1.3",
+    "pass-client": "0.0.3",
+    "qs": "^6.10.1",
+    "which": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-decorators": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/plugin-proposal-private-methods": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/glob": "^7.1.3",
+    "@types/jest": "^26.0.23",
+    "@types/marked": "^2.0.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "~16.0.0",
+    "@types/qs": "^6.9.6",
+    "@types/vscode": "^1.57.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "cspell": "^5.6.6",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-spellcheck": "^0.0.19",
+    "glob": "^7.1.7",
+    "jest": "^27.0.6",
+    "jest-sonar-reporter": "^2.0.0",
+    "lockfile-lint": "^4.6.2",
+    "majestic": "^1.8.1",
+    "mocha": "^9.0.2",
+    "prettier": "^2.3.2",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "vscode-test": "^1.5.2",
+    "webpack": "^5.43.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "eslintIgnore": [
+    "dist",
+    "es",
+    "lib"
+  ],
+  "jest": {
+    "testRegex": "((/(tests|__tests__)((/|/[^_.\n][^/\n]*(/[^_.\n][^/\n]+)*/)[^_.\n][^/\n]*))|((/|/.*/)(([^_.\n][^/\n]*.(spec|test))|(spec|test)))).[jt]sx?$",
+    "testEnvironment": "node",
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/es/",
+      "<rootDir>/lib/",
+      "<rootDir>/out/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/_setup.ts"
+    ]
+  },
+  "jestSonar": {
+    "reportPath": "node_modules/.tmp/reports",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
   "engines": {
     "vscode": "^1.57.0"
   },
@@ -14,7 +150,6 @@
     "onCommand:pass.showPassword",
     "onCustomEditor:passEdit.gpg"
   ],
-  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -34,42 +169,5 @@
         "priority": "default"
       }
     ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "test-compile": "tsc -p ./",
-    "test-watch": "tsc -watch -p ./",
-    "pretest": "npm run test-compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/marked": "^2.0.3",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "~16.0.0",
-    "@types/qs": "^6.9.6",
-    "@types/vscode": "^1.57.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "eslint": "^7.30.0",
-    "glob": "^7.1.7",
-    "mocha": "^9.0.2",
-    "ts-loader": "^9.2.3",
-    "typescript": "^4.3.5",
-    "vscode-test": "^1.5.2",
-    "webpack": "^5.42.0",
-    "webpack-cli": "^4.7.2"
-  },
-  "dependencies": {
-    "@types/which": "^2.0.1",
-    "execa": "^5.1.1",
-    "marked": "^2.1.3",
-    "pass-client": "0.0.3",
-    "qs": "^6.10.1",
-    "which": "^2.0.2"
   }
 }

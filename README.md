@@ -1,70 +1,50 @@
-# pass README
+# vscode-pass
 
-This is the README for your extension "pass". After writing up a brief description, we recommend including the following sections.
+[![GitHub stars](https://img.shields.io/github/stars/clayrisser/vscode-pass.svg?style=social&label=Stars)](https://github.com/clayrisser/vscode-pass)
 
-## Features
+> access passwords from the standard unix password manager
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Please ★ this repo if you found it useful ★ ★ ★
 
-For example if there is an image subfolder under your extension project workspace:
+## Dependencies
 
-\!\[feature X\]\(images/feature-x.png\)
+- [VSCode](https://code.visualstudio.com)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
 
-## Requirements
+[Contribute](https://github.com/clayrisser/vscode-pass/blob/master/CONTRIBUTING.md) usage docs
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Support
 
-## Extension Settings
+Submit an [issue](https://github.com/clayrisser/vscode-pass/issues/new)
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Screenshots
 
-For example:
+[Contribute](https://github.com/clayrisser/vscode-pass/blob/master/CONTRIBUTING.md) a screenshot
 
-This extension contributes the following settings:
+## Contributing
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+Review the [guidelines for contributing](https://github.com/clayrisser/vscode-pass/blob/master/CONTRIBUTING.md)
 
-## Known Issues
+## License
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+[Apache-2.0 License](https://github.com/clayrisser/vscode-pass/blob/master/LICENSE)
 
-## Release Notes
+[Clay Risser](https://clayrisser.com) © 2021
 
-Users appreciate release notes as you update your extension.
+## Changelog
 
-### 1.0.0
+Review the [changelog](https://github.com/clayrisser/vscode-pass/blob/master/CHANGELOG.md)
 
-Initial release of ...
+## Credits
 
-### 1.0.1
+- [Clay Risser](https://clayrisser.com) - Author
 
-Fixed issue #.
+## Support on Liberapay
 
-### 1.1.0
+A ridiculous amount of coffee ☕ ☕ ☕ was consumed in the process of building this project.
 
-Added features X, Y, and Z.
+[Add some fuel](https://liberapay.com/clayrisser/donate) if you'd like to keep me going!
 
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+[![Liberapay receiving](https://img.shields.io/liberapay/receives/clayrisser.svg?style=flat-square)](https://liberapay.com/clayrisser/donate)
+[![Liberapay patrons](https://img.shields.io/liberapay/patrons/clayrisser.svg?style=flat-square)](https://liberapay.com/clayrisser/donate)

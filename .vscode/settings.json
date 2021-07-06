@@ -1,20 +1,134 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-    "files.exclude": {
-        "out": false, // set this to true to hide the "out" folder with the compiled JS files
-        "dist": false // set this to true to hide the "dist" folder with the compiled JS files
+  "cSpell.words": [
+    "babelrc",
+    "chromeandroid",
+    "commonjs",
+    "commonjs2",
+    "corejs",
+    "csp",
+    "cspell",
+    "devtool",
+    "ecma",
+    "execa",
+    "gnupg",
+    "gpg",
+    "homedir",
+    "href",
+    "jsx",
+    "lang",
+    "nosources",
+    "passwordstore",
+    "plusplus",
+    "rebased",
+    "risser",
+    "tdd",
+    "tsconfig",
+    "tsx",
+    "umd",
+    "uri",
+    "vscode",
+    "webview",
+    "webviews",
+    "workspace",
+    "yoda"
+  ],
+  "files.exclude": {
+    "out": false,
+    "dist": false
+  },
+  "search.exclude": {
+    "out": true,
+    "dist": true
+  },
+  "typescript.tsc.autoDetect": "off",
+  "psi-header.variables": [["projectCreationYear", "2021"]],
+  "psi-header.config": {
+    "author": "Clay Risser",
+    "authorEmail": "email@clayrisser.com",
+    "blankLinesAfter": 1,
+    "company": "Silicon Hills LLC",
+    "copyrightHolder": "Silicon Hills LLC",
+    "creationDateZero": "asIs",
+    "forceToTop": true,
+    "initials": "CR",
+    "license": "Custom"
+  },
+  "psi-header.license-text": [
+    " Licensed under the Apache License, Version 2.0 (the \"License\");",
+    " you may not use this file except in compliance with the License.",
+    " You may obtain a copy of the License at",
+    "",
+    "     http://www.apache.org/licenses/LICENSE-2.0",
+    "",
+    " Unless required by applicable law or agreed to in writing, software",
+    " distributed under the License is distributed on an \"AS IS\" BASIS,",
+    " WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.",
+    " See the License for the specific language governing permissions and",
+    " limitations under the License."
+  ],
+  "psi-header.templates": [
+    {
+      "language": "*",
+      "template": [
+        " File: <<filerelativepath>>",
+        " Project: <<projectname>>",
+        " File Created: <<filecreated('DD-MM-YYYY HH:mm:ss')>>",
+        " Author: <<author>> <<<authoremail>>>",
+        " -----",
+        " Last Modified: <<dateformat('DD-MM-YYYY HH:mm:ss')>>",
+        " Modified By: <<author>> <<<authoremail>>>",
+        " -----",
+        " <<copyrightholder>> (c) Copyright <<yeartoyear(<<projectCreationYear>>, now)>>",
+        "",
+        "<<licensetext>>"
+      ]
+    }
+  ],
+  "psi-header.lang-config": [
+    {
+      "language": "*",
+      "begin": "/*",
+      "blankLinesAfter": 1,
+      "end": " */",
+      "forceToTop": true,
+      "lineLength": 80,
+      "modAuthor": "Modified By:",
+      "modDate": "Last Modified:",
+      "modDateFormat": "dd-MM-yyyy HH:mm:ss",
+      "prefix": " *",
+      "replace": ["File:"],
+      "rootDirFileName": "LICENSE",
+      "suffix": ""
     },
-    "search.exclude": {
-        "out": true, // set this to false to include "out" folder in search results
-        "dist": true // set this to false to include "dist" folder in search results
-    },
-    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off",
-    "cSpell.words": [
-        "browserpass",
-        "cowsay",
-        "execa",
-        "gnupg",
-        "webviews"
-    ]
+    {
+      "language": "makefile",
+      "begin": "",
+      "blankLinesAfter": 1,
+      "end": "",
+      "forceToTop": true,
+      "lineLength": 80,
+      "modAuthor": "Modified By:",
+      "modDate": "Last Modified:",
+      "modDateFormat": "dd-MM-yyyy HH:mm:ss",
+      "prefix": "#",
+      "replace": ["File:"],
+      "rootDirFileName": "LICENSE",
+      "suffix": ""
+    }
+  ],
+  "psi-header.changes-tracking": {
+    "autoHeader": "autoSave",
+    "enforceHeader": true,
+    "include": ["javascript", "makefile", "typescript"],
+    "isActive": true,
+    "modAuthor": "Modified By:",
+    "modDate": "Last Modified:",
+    "modDateFormat": "dd-MM-yyyy hh:nn:ss",
+    "replace": ["Filename:"],
+    "updateLicenseVariables": true
+  },
+  "psi-header.license-reference": {
+    "uri": "../LICENSE",
+    "uriIsLocalFile": true
+  }
 }

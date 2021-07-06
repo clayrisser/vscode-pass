@@ -1,8 +1,32 @@
-import * as vscode from "vscode";
-import * as os from "os";
-import * as path from "path";
-import { Pass } from "pass-client";
-import { Disposable } from "./dispose";
+/*
+ * File: /src/passDocument.ts
+ * Project: vscode-pass
+ * File Created: 06-07-2021 15:27:46
+ * Author: Clay Risser <email@clayrisser.com>
+ * -----
+ * Last Modified: 06-07-2021 16:40:55
+ * Modified By: Clay Risser <email@clayrisser.com>
+ * -----
+ * Silicon Hills LLC (c) Copyright 2021
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import vscode from 'vscode';
+import os from 'os';
+import path from 'path';
+import { Pass } from 'pass-client';
+import { Disposable } from './dispose';
 
 export default class PassDocument
   extends Disposable
@@ -35,18 +59,18 @@ export default class PassDocument
     delegate: PassDocumentDelegate
   ): Promise<PassDocument | PromiseLike<PassDocument>> {
     const dataFile =
-      typeof backupId === "string" ? vscode.Uri.parse(backupId) : uri;
+      typeof backupId === 'string' ? vscode.Uri.parse(backupId) : uri;
     const content = await PassDocument.readFile(dataFile);
     return new PassDocument(uri, content, delegate);
   }
 
   private static async readFile(uri: vscode.Uri): Promise<string> {
-    if (uri.scheme === "untitled") {
-      return "";
+    if (uri.scheme === 'untitled') {
+      return '';
     }
-    const passwordStorePath = path.resolve(os.homedir(), ".password-store");
+    const passwordStorePath = path.resolve(os.homedir(), '.password-store');
     const pass = new Pass({ passwordStorePath });
-    return (await pass.show(uri.fsPath.replace(passwordStorePath, "")))
+    return (await pass.show(uri.fsPath.replace(passwordStorePath, '')))
       ?.contents;
   }
 
@@ -68,13 +92,13 @@ export default class PassDocument
     cancellation: vscode.CancellationToken
   ): Promise<void> {
     const content = await this._delegate.getContent();
-    const passwordStorePath = path.resolve(os.homedir(), ".password-store");
+    const passwordStorePath = path.resolve(os.homedir(), '.password-store');
     if (cancellation.isCancellationRequested) {
       return;
     }
     const pass = new Pass({ passwordStorePath });
     await pass.insert(
-      targetResource.fsPath.replace(passwordStorePath, ""),
+      targetResource.fsPath.replace(passwordStorePath, ''),
       content
     );
   }
@@ -85,7 +109,7 @@ export default class PassDocument
     this._edits = this._savedEdits;
     this._onDidChangeDocument.fire({
       content,
-      edits: this._edits,
+      edits: this._edits
     });
   }
 
@@ -102,26 +126,26 @@ export default class PassDocument
         } catch {
           // noop
         }
-      },
+      }
     };
   }
 
   makeEdit(edit: PassEdit) {
     this._edits.push(edit);
     this._onDidChange.fire({
-      label: "Edit",
+      label: 'Edit',
       undo: async () => {
         this._edits.pop();
         this._onDidChangeDocument.fire({
-          edits: this._edits,
+          edits: this._edits
         });
       },
       redo: async () => {
         this._edits.push(edit);
         this._onDidChangeDocument.fire({
-          edits: this._edits,
+          edits: this._edits
         });
-      },
+      }
     });
   }
 
@@ -133,11 +157,13 @@ export default class PassDocument
   private readonly _onDidDispose = this._register(
     new vscode.EventEmitter<void>()
   );
+
   public readonly onDidDispose = this._onDidDispose.event;
 
   private readonly _onDidChangeDocument = this._register(
     new vscode.EventEmitter<PassEdit>()
   );
+
   public readonly onDidChangeContent = this._onDidChangeDocument.event;
 
   private readonly _onDidChange = this._register(
@@ -147,6 +173,7 @@ export default class PassDocument
       redo(): void;
     }>()
   );
+
   public readonly onDidChange = this._onDidChange.event;
 }
 

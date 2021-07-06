@@ -1,9 +1,33 @@
-import * as vscode from "vscode";
-import * as marked from "marked";
-import PassDocument, { PassEdit } from "./passDocument";
-import WebviewCollection from "./webviewCollection";
-import { disposeAll } from "./dispose";
-import { getNonce } from "./util";
+/*
+ * File: /src/passEditorProvider.ts
+ * Project: vscode-pass
+ * File Created: 06-07-2021 15:27:46
+ * Author: Clay Risser <email@clayrisser.com>
+ * -----
+ * Last Modified: 06-07-2021 16:41:11
+ * Modified By: Clay Risser <email@clayrisser.com>
+ * -----
+ * Silicon Hills LLC (c) Copyright 2021
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import vscode from 'vscode';
+import marked from 'marked';
+import PassDocument, { PassEdit } from './passDocument';
+import WebviewCollection from './webviewCollection';
+import { disposeAll } from './dispose';
+import { getNonce } from './util';
 
 export default class PassEditorProvider
   implements vscode.CustomEditorProvider<PassDocument>
@@ -12,7 +36,7 @@ export default class PassEditorProvider
 
   constructor(private readonly _context: vscode.ExtensionContext) {}
 
-  static readonly viewType = "passEdit.gpg";
+  static readonly viewType = 'passEdit.gpg';
 
   private readonly _onDidChangeCustomDocument = new vscode.EventEmitter<
     vscode.CustomDocumentEditEvent<PassDocument>
@@ -31,9 +55,9 @@ export default class PassEditorProvider
       new PassEditorProvider(context),
       {
         webviewOptions: {
-          retainContextWhenHidden: false,
+          retainContextWhenHidden: false
         },
-        supportsMultipleEditorsPerDocument: false,
+        supportsMultipleEditorsPerDocument: false
       }
     );
   }
@@ -75,7 +99,7 @@ export default class PassEditorProvider
   ): Promise<void> {
     this.webviews.add(document.uri, webviewPanel);
     webviewPanel.webview.options = {
-      enableScripts: true,
+      enableScripts: true
     };
     webviewPanel.webview.html = await this.getHtmlForWebview(
       webviewPanel.webview,
@@ -85,19 +109,19 @@ export default class PassEditorProvider
       this.onMessage(document, e)
     );
     webviewPanel.webview.onDidReceiveMessage((e) => {
-      if (e.type === "ready") {
-        if (document.uri.scheme === "untitled") {
-          this.postMessage(webviewPanel, "init", {
+      if (e.type === 'ready') {
+        if (document.uri.scheme === 'untitled') {
+          this.postMessage(webviewPanel, 'init', {
             untitled: true,
-            editable: true,
+            editable: true
           });
         } else {
           const editable = vscode.workspace.fs.isWritableFileSystem(
             document.uri.scheme
           );
-          this.postMessage(webviewPanel, "init", {
+          this.postMessage(webviewPanel, 'init', {
             value: document.content,
-            editable,
+            editable
           });
         }
       }
@@ -118,11 +142,11 @@ export default class PassEditorProvider
             this.webviews.get(document.uri)
           );
           if (!webviewsForDocument.length) {
-            throw new Error("Could not find webview to save for");
+            throw new Error('Could not find webview to save for');
           }
           const panel = webviewsForDocument[0];
-          return this.postMessageWithResponse<string>(panel, "getContent", {});
-        },
+          return this.postMessageWithResponse<string>(panel, 'getContent', {});
+        }
       }
     );
     const listeners: vscode.Disposable[] = [];
@@ -130,18 +154,20 @@ export default class PassEditorProvider
       document.onDidChange((e: any) => {
         this._onDidChangeCustomDocument.fire({
           document,
-          ...e,
+          ...e
         });
       })
     );
     listeners.push(
       document.onDidChangeContent((e: any) => {
-        for (const webviewPanel of this.webviews.get(document.uri)) {
-          this.postMessage(webviewPanel, "update", {
-            edits: e.edits,
-            content: e.content,
-          });
-        }
+        Array.from(this.webviews.get(document.uri)).forEach(
+          (webviewPanel: vscode.WebviewPanel) => {
+            this.postMessage(webviewPanel, 'update', {
+              edits: e.edits,
+              content: e.content
+            });
+          }
+        );
       })
     );
     document.onDidDispose(() => disposeAll(listeners));
@@ -153,14 +179,14 @@ export default class PassEditorProvider
     content: string
   ): Promise<string> {
     const scriptPassUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._context.extensionUri, "media", "pass.js")
+      vscode.Uri.joinPath(this._context.extensionUri, 'media', 'pass.js')
     );
     const stylePassUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._context.extensionUri, "media", "pass.css")
+      vscode.Uri.joinPath(this._context.extensionUri, 'media', 'pass.css')
     );
     const contentHtml = await new Promise((resolve, reject) => {
       marked.parse(
-        content.replace(/\n/g, "\n\n"),
+        content.replace(/\n/g, '\n\n'),
         (err: Error, result: string) => {
           if (err) {
             return reject(err);
@@ -212,13 +238,12 @@ export default class PassEditorProvider
 
   private onMessage(document: PassDocument, message: any) {
     switch (message.type) {
-      case "stroke":
+      case 'stroke':
         document.makeEdit(message as PassEdit);
         return;
-      case "response": {
+      case 'response': {
         const callback = this._callbacks.get(message.requestId);
         callback?.(message.body);
-        return;
       }
     }
   }

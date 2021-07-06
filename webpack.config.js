@@ -1,42 +1,58 @@
-//@ts-check
-
-'use strict';
+/*
+ * File: /webpack.config.js
+ * Project: vscode-pass
+ * File Created: 06-07-2021 15:08:37
+ * Author: Clay Risser <email@clayrisser.com>
+ * -----
+ * Last Modified: 06-07-2021 16:11:35
+ * Modified By: Clay Risser <email@clayrisser.com>
+ * -----
+ * Silicon Hills LLC (c) Copyright 2021
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 const path = require('path');
 
-/**@type {import('webpack').Configuration}*/
-const config = {
-  target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
-	mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
-
-  entry: './src/extension.ts', // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
+module.exports = {
+  target: 'node',
+  mode: 'none',
+  entry: './src/extension.ts',
   output: {
-    // the bundle is stored in the 'dist' folder (check package.json), 📖 -> https://webpack.js.org/configuration/output/
     path: path.resolve(__dirname, 'dist'),
     filename: 'extension.js',
     libraryTarget: 'commonjs2'
   },
   devtool: 'nosources-source-map',
   externals: {
-    vscode: 'commonjs vscode' // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
-    // modules added here also need to be added in the .vsceignore file
+    vscode: 'commonjs vscode'
   },
   resolve: {
-    // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.tsx', '.jsx']
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.([jt]sx?)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader'
+        use: {
+          loader: 'babel-loader',
+          options: {
+            babelrc: true,
+            envName: 'umd'
           }
-        ]
+        }
       }
     ]
   }
 };
-module.exports = config;
