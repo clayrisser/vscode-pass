@@ -1,16 +1,14 @@
 import * as vscode from "vscode";
 import Commands from "./commands";
+import PassDocumentContentProvider from "./passDocumentContentProvider";
+import PassEditorProvider from "./passEditorProvider";
 import pkg from "./pkg";
-import PassDocument from "./passDocument";
 
 export function activate(context: vscode.ExtensionContext) {
-  vscode.workspace.registerTextDocumentContentProvider(
-    "pass",
-    new PassDocument()
-  );
+  context.subscriptions.push(PassDocumentContentProvider.register(context));
+  context.subscriptions.push(PassEditorProvider.register(context));
 
   const commands = new Commands(context);
-
   Object.getOwnPropertyNames(Object.getPrototypeOf(commands)).forEach(
     (commandName: string) => {
       if (

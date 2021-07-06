@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import * as os from "os";
 import * as path from "path";
 import { Pass, HashMap } from "pass-client";
+import PassDocumentContentProvider from "./passDocumentContentProvider";
+import PassEditorProvider from "./passEditorProvider";
 
 const passwordStorePath = path.resolve(os.homedir(), ".password-store");
 
@@ -18,7 +20,7 @@ export default class Commands {
           return;
         }
         const content = fileList.join("\n");
-        await this._openFile(`${listName}.list`, content);
+        await PassDocumentContentProvider.openFile(`${listName}.list`, content);
       }
     );
   }
@@ -50,14 +52,11 @@ export default class Commands {
     if (!content) {
       return;
     }
-    await this._openFile(password, content);
-  }
-
-  private async _openFile(filename: string, content: string) {
-    const uri = vscode.Uri.parse(
-      `pass:${filename}?content=${Buffer.from(content).toString("base64")}`
+    const uri = vscode.Uri.parse(path.resolve(passwordStorePath, password));
+    vscode.commands.executeCommand(
+      "vscode.openWith",
+      uri,
+      PassEditorProvider.viewType
     );
-    const doc = await vscode.workspace.openTextDocument(uri);
-    await vscode.window.showTextDocument(doc, { preview: false });
   }
 }

@@ -14,6 +14,7 @@
         "browserpass",
         "cowsay",
         "execa",
-        "gnupg"
+        "gnupg",
+        "webviews"
     ]
 }
