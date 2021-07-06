@@ -3,7 +3,7 @@
 # File Created: 06-07-2021 15:08:37
 # Author: Clay Risser <email@clayrisser.com>
 # -----
-# Last Modified: 06-07-2021 16:37:03
+# Last Modified: 06-07-2021 17:19:13
 # Modified By: Clay Risser <email@clayrisser.com>
 # -----
 # Silicon Hills LLC (c) Copyright 2021
@@ -24,9 +24,12 @@ export MAKE_CACHE := $(shell pwd)/node_modules/.make
 export PARENT := true
 include blackmagic.mk
 
+VERSION := $(shell cat package.json | jq -r '.version')
+PACKAGE := pass-$(VERSION).vsix
+
 BABEL ?= node_modules/.bin/babel
 BABEL_NODE ?= node_modules/.bin/babel-node
-CLOC ?= node_modules/.bin/cloc
+CLOC ?= cloc
 CSPELL ?= node_modules/.bin/cspell
 ESLINT ?= node_modules/.bin/eslint
 JEST ?= node_modules/.bin/jest
@@ -35,6 +38,7 @@ MAJESTIC ?= node_modules/.bin/majestic
 PRETTIER ?= node_modules/.bin/prettier
 TMP_DIR ?= node_modules/.tmp
 TSC ?= node_modules/.bin/tsc
+VSCE ?= node_modules/.bin/vsce
 WEBPACK ?= node_modules/.bin/webpack
 COLLECT_COVERAGE_FROM := ["src/**/*.{js,jsx,ts,tsx}"]
 
@@ -95,6 +99,24 @@ $(ACTION)/build:
 	@$(WEBPACK) --mode production --devtool hidden-source-map
 	@$(call done,build)
 
+ACTIONS += package~build
+PACKAGE_DEPS := $(call deps,package,$(shell $(GIT) ls-files 2>$(NULL) | \
+	grep -E "\.([jt]sx?)$$"))
+PACKAGE_TARGET := $(PACKAGE)
+$(PACKAGE):
+	@$(MAKE) -s _package
+	@rm -rf $(ACTION)/package $(NOFAIL)
+$(ACTION)/package:
+	@$(VSCE) package
+	@$(call done,package)
+
+ACTIONS += publish~package
+PUBLISH_DEPS := $(call deps,publish,$(shell $(GIT) ls-files 2>$(NULL) | \
+	grep -E "\.([jt]sx?)$$"))
+$(ACTION)/publish:
+	@$(VSCE) publish
+	@$(call done,publish)
+
 .PHONY: prepare
 prepare: ;
 
@@ -110,11 +132,19 @@ inc:
 count:
 	@$(CLOC) $(shell $(GIT) ls-files)
 
-.PHONY: publish +publish
-publish: build
-	@$(MAKE) -s +publish
-+publish:
-	@$(NPM) publish
+# .PHONY: package +package
+# publish: build
+# 	@$(MAKE) -s +publish
+# +publish:
+# 	@$(VSCE) publish
+
+
+
+# .PHONY: publish +publish
+# publish: build
+# 	@$(MAKE) -s +publish
+# +publish:
+# 	@$(VSCE) publish
 
 .PHONY: pack +pack
 pack: build
