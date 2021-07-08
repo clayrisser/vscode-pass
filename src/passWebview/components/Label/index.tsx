@@ -1,10 +1,10 @@
 /**
- * File: /webpack.react.js
+ * File: /src/passWebview/components/Label/index.tsx
  * Project: pass
- * File Created: 08-07-2021 01:39:39
+ * File Created: 08-07-2021 03:15:45
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 08-07-2021 03:56:28
+ * Last Modified: 08-07-2021 03:22:30
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -22,34 +22,18 @@
  * limitations under the License.
  */
 
-const path = require('path');
+import React, { FC } from 'react';
 
-module.exports = {
-  target: 'node',
-  mode: 'none',
-  entry: './src/passWebview/index.tsx',
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: 'passWebview.js',
-    libraryTarget: 'commonjs2'
-  },
-  devtool: 'nosources-source-map',
-  resolve: {
-    extensions: ['.ts', '.js', '.tsx', '.jsx']
-  },
-  module: {
-    rules: [
-      {
-        test: /\.([jt]sx?)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: true,
-            envName: 'umd'
-          }
-        }
-      }
-    ]
-  }
-};
+export interface LabelProps
+  extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+
+const Label: FC<LabelProps> = (props: LabelProps) => (
+  <label
+    style={{
+      ...props.style
+    }}
+    {...props}
+  />
+);
+
+export default Label;

@@ -4,7 +4,7 @@
  * File Created: 06-07-2021 15:27:46
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 08-07-2021 03:12:08
+ * Last Modified: 08-07-2021 03:53:26
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -103,7 +103,8 @@ export default class PassEditorProvider
     };
     webviewPanel.webview.html = await this.getHtmlForWebview(
       webviewPanel.webview,
-      document.content
+      document.content,
+      { uri: document.uri.toString() }
     );
     webviewPanel.webview.onDidReceiveMessage((e) =>
       this.onMessage(document, e)

@@ -4,7 +4,7 @@
  * File Created: 08-07-2021 02:58:11
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 08-07-2021 03:07:19
+ * Last Modified: 08-07-2021 03:53:32
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -24,6 +24,7 @@
 
 export interface Data {
   content: string;
+  uri: string;
 }
 
 // @ts-ignore

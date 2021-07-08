@@ -1,10 +1,10 @@
 /**
- * File: /webpack.react.js
+ * File: /src/passWebview/components/index.ts
  * Project: pass
- * File Created: 08-07-2021 01:39:39
+ * File Created: 08-07-2021 03:24:51
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 08-07-2021 03:56:28
+ * Last Modified: 08-07-2021 03:25:33
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -21,35 +21,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import Button from './Button';
+import Input from './Input';
+import Label from './Label';
 
-const path = require('path');
+export { Button, Input, Label };
 
-module.exports = {
-  target: 'node',
-  mode: 'none',
-  entry: './src/passWebview/index.tsx',
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    filename: 'passWebview.js',
-    libraryTarget: 'commonjs2'
-  },
-  devtool: 'nosources-source-map',
-  resolve: {
-    extensions: ['.ts', '.js', '.tsx', '.jsx']
-  },
-  module: {
-    rules: [
-      {
-        test: /\.([jt]sx?)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: true,
-            envName: 'umd'
-          }
-        }
-      }
-    ]
-  }
-};
+export * from './Button';
+export * from './Input';
+export * from './Label';
