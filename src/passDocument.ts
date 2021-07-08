@@ -1,10 +1,10 @@
-/*
+/**
  * File: /src/passDocument.ts
- * Project: vscode-pass
+ * Project: pass
  * File Created: 06-07-2021 15:27:46
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 06-07-2021 16:40:55
+ * Last Modified: 08-07-2021 04:09:25
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021

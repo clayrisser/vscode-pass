@@ -1,10 +1,10 @@
-/*
+/**
  * File: /src/extension.ts
  * Project: vscode-pass
  * File Created: 06-07-2021 15:27:46
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 06-07-2021 16:44:59
+ * Last Modified: 08-07-2021 04:09:41
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
