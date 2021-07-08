@@ -1,10 +1,10 @@
-/*
+/**
  * File: /src/passEditorProvider.ts
- * Project: vscode-pass
+ * Project: pass
  * File Created: 06-07-2021 15:27:46
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 06-07-2021 16:41:11
+ * Last Modified: 08-07-2021 03:12:08
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -23,18 +23,18 @@
  */
 
 import vscode from 'vscode';
-import marked from 'marked';
 import PassDocument, { PassEdit } from './passDocument';
 import WebviewCollection from './webviewCollection';
 import { disposeAll } from './dispose';
 import { getNonce } from './util';
+import { HashMap } from './types';
 
 export default class PassEditorProvider
   implements vscode.CustomEditorProvider<PassDocument>
 {
   private readonly webviews = new WebviewCollection();
 
-  constructor(private readonly _context: vscode.ExtensionContext) {}
+  constructor(private readonly context: vscode.ExtensionContext) {}
 
   static readonly viewType = 'passEdit.gpg';
 
@@ -176,40 +176,34 @@ export default class PassEditorProvider
 
   private async getHtmlForWebview(
     webview: vscode.Webview,
-    content: string
+    content: string,
+    data: HashMap<any> = {}
   ): Promise<string> {
     const scriptPassUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._context.extensionUri, 'media', 'pass.js')
+      vscode.Uri.joinPath(this.context.extensionUri, 'public/passWebview.js')
     );
     const stylePassUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._context.extensionUri, 'media', 'pass.css')
+      vscode.Uri.joinPath(this.context.extensionUri, 'media/pass.css')
     );
-    const contentHtml = await new Promise((resolve, reject) => {
-      marked.parse(
-        content.replace(/\n/g, '\n\n'),
-        (err: Error, result: string) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(result);
-        }
-      );
-    });
+    data.content = content;
     const nonce = getNonce();
     return /* html */ `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
 				<meta charset="UTF-8">
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} blob:; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${
+          webview.cspSource
+        } blob:; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<link href="${stylePassUri}" rel="stylesheet" />
 				<title>Paw Draw</title>
 			</head>
 			<body>
-        <body id="pass">
-          ${contentHtml}
-        </body>
+        <body id="pass" />
+        <script nonce="${nonce}">
+          window.__passData=${JSON.stringify(data)}
+        </script>
 				<script nonce="${nonce}" src="${scriptPassUri}"></script>
 			</body>
 			</html>`;

@@ -3,7 +3,7 @@
 # File Created: 06-07-2021 15:08:37
 # Author: Clay Risser <email@clayrisser.com>
 # -----
-# Last Modified: 06-07-2021 17:19:13
+# Last Modified: 08-07-2021 01:57:35
 # Modified By: Clay Risser <email@clayrisser.com>
 # -----
 # Silicon Hills LLC (c) Copyright 2021
@@ -96,6 +96,7 @@ dist/extension.js:
 	@$(MAKE) -s _build
 	@rm -rf $(ACTION)/build $(NOFAIL)
 $(ACTION)/build:
+	@$(WEBPACK) -c webpack.react.js --mode production --devtool hidden-source-map
 	@$(WEBPACK) --mode production --devtool hidden-source-map
 	@$(call done,build)
 
@@ -131,20 +132,6 @@ inc:
 .PHONY: count
 count:
 	@$(CLOC) $(shell $(GIT) ls-files)
-
-# .PHONY: package +package
-# publish: build
-# 	@$(MAKE) -s +publish
-# +publish:
-# 	@$(VSCE) publish
-
-
-
-# .PHONY: publish +publish
-# publish: build
-# 	@$(MAKE) -s +publish
-# +publish:
-# 	@$(VSCE) publish
 
 .PHONY: pack +pack
 pack: build

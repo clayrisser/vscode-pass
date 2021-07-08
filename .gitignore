@@ -63,3 +63,4 @@ yarn.lock
 tsconfig.tsbuildinfo
 pnpm-lock.yaml
 /*.vsix
+/public

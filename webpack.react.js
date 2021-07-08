@@ -1,10 +1,10 @@
 /**
- * File: /webpack.config.js
- * Project: vscode-pass
- * File Created: 06-07-2021 15:08:37
+ * File: /webpack.react.js
+ * Project: pass
+ * File Created: 08-07-2021 01:39:39
  * Author: Clay Risser <email@clayrisser.com>
  * -----
- * Last Modified: 08-07-2021 01:40:28
+ * Last Modified: 08-07-2021 01:54:31
  * Modified By: Clay Risser <email@clayrisser.com>
  * -----
  * Silicon Hills LLC (c) Copyright 2021
@@ -27,16 +27,13 @@ const path = require('path');
 module.exports = {
   target: 'node',
   mode: 'none',
-  entry: './src/extension.ts',
+  entry: './src/passWebview/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'extension.js',
+    path: path.resolve(__dirname, 'public'),
+    filename: 'passWebview.js',
     libraryTarget: 'commonjs2'
   },
   devtool: 'nosources-source-map',
-  externals: {
-    vscode: 'commonjs vscode'
-  },
   resolve: {
     extensions: ['.ts', '.js', '.tsx', '.jsx']
   },

@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "incremental": false,
-    "lib": ["esnext"],
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
@@ -22,5 +23,5 @@
       "~tests/*": ["tests/*"]
     }
   },
-  "include": ["src", "tests", ".eslintrc.js", "webpack.config.js"]
+  "include": ["src", "tests", ".eslintrc.js", "webpack.*.js"]
 }
