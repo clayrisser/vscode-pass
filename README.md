@@ -4,6 +4,8 @@
 
 > access passwords from the standard unix password manager
 
+![](assets/vscode-pass.png)
+
 Please ★ this repo if you found it useful ★ ★ ★
 
 ## Dependencies
